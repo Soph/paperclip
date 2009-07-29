@@ -1,7 +1,7 @@
 def obtain_class
   class_name = ENV['CLASS'] || ENV['class']
   raise "Must specify CLASS" unless class_name
-  @klass = Object.const_get(class_name)
+  @klass = class_name.split('::').inject(Kernel) {|scope, const_name| scope.const_get(const_name)}
 end
 
 def obtain_attachments
